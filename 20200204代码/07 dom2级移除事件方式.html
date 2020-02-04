@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 200px;
+			height: 200px;
+			margin: 0 auto;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<button id="btn">点我移除事件</button>
+	<script type="text/javascript">
+	// 其实现在大部分浏览器都支持， 一旦给一个元素添加了id， 相当于给window添加了一个属性，一般在测试的时候可以这样使用，但是在开发的时候还要通过getElementById来获取元素。
+
+	// 获取元素
+	var box = document.getElementById("box");
+	var btn = document.getElementById("btn");
+
+	// 将函数提取为有名函数
+	function click() {
+		console.log("函数执行了");
+	}
+	// 添加Dom2事件
+	box.attachEvent("onclick",click)
+
+	// 点击btn的时候移除box上事件
+	btn.onclick = function() {
+		box.detachEvent("onclick", click);
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 500px;
+			height: 500px;
+			margin: 0 auto;
+			background-color: red;
+		}
+		#box1 {
+			width: 250px;
+			height: 250px;
+			margin: 0 auto;
+			background-color: blue;
+		}
+		#box2 {
+			width: 100px;
+			height: 100px;
+			margin: 0 auto;
+			background-color: pink;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="box1">
+			<div id="box2"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+	var box1 = document.getElementById("box1");
+	var box2 = document.getElementById("box2");
+	// 绑定到冒泡阶段
+	box.addEventListener("click", function() {
+		console.log("box 冒泡")
+	}, false);
+
+	box1.addEventListener("click", function() {
+		console.log("box1 冒泡");
+	}, false)
+
+	box2.addEventListener("click", function() {
+		console.log("box2 冒泡");
+	}, false)
+
+	// 绑定到捕获阶段
+	box.addEventListener("click", function() {
+		console.log("box 捕获");
+	}, true)
+
+	box1.addEventListener("click", function() {
+		console.log("box1 捕获");
+	}, true)
+
+	box2.addEventListener("click", function() {
+		console.log("box2 捕获");
+	}, true)
+
+
+	// 按照事件流程图执行事件的顺序应该是: box的捕获， box1的捕获， box2的捕获， box2的冒泡， box1的冒泡， box的冒泡
+
+	// 但是又按照时间流程图的规定： 当元素是最精确的元素的时候， 它是不区分捕获和冒泡的，所以执行的顺序是:
+	// box的捕获， box1的捕获， box2的冒泡， box2的捕获, box1的冒泡， box的冒泡。
+	</script>
+</body>
+</html>

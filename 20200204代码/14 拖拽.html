@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			/*因为是要拖拽 改变的是元素的定位值，所以要绝对定位 */
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+
+	// 要求: 当鼠标按下box的时候并移动鼠标， 元素要跟随鼠标移动
+
+	// 给box添加mousedown事件
+
+	box.onmousedown = function(e) {
+		// 获取鼠标位于视口中的位置
+		var x = e.clientX;
+		var y = e.clientY;
+
+		// 获取box的定位值
+		var left = parseInt(getComputedStyle(box)["left"]);
+		var top = parseInt(getComputedStyle(box)["top"]);
+		// console.log(left, top);
+
+		// 给document添加mousemove事件
+		
+		document.onmousemove = function(e){
+			var m_x = e.clientX;
+			var m_y = e.clientY;
+			box.style.left=m_x-x+left+"px";
+			box.style.top=m_y-y+top+"px";
+			
+		}
+		
+	}
+
+	// 当鼠标抬起， 不要让box再跟随移动了
+	document.onmouseup = function() {
+		document.onmousemove = null;
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="http://www.baidu.com">跳转页面</a>
+	<script type="text/javascript">
+	// 使用js来阻止默认事件
+	// 获取元素
+	var a = document.getElementsByTagName("a")[0];
+
+	// 添加点击事件
+	// a.onclick = function(e) {
+	// 	// 兼容IE
+	// 	var e = e || window.event;
+	// 	// 在高级浏览器中阻止默认事件的方式：
+	// 	// e.preventDefault();
+
+	// 	// 在IE中阻止默认事件的方式:
+	// 	// e.returnValue = false;
+		
+	// 	// dom0级事件中， 还可以使用return false 
+	// 	// return false;
+	// }
+
+
+	// dom2级绑定事件  return false 不能阻止默认事件
+	a.addEventListener("click", function() {
+		return false;
+	})
+	</script>
+</body>
+</html>

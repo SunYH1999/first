@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body style="height:500px">
+	<script type="text/javascript">
+	// 定义函数
+	function fun(a, b, c) {
+		console.log(this, arguments);
+	}
+
+	// 函数单独执行
+	// fun(1, 2, 3);
+
+	// 作为事件函数执行
+	// document.onclick = fun;
+
+	// document.body.onclick = fun;
+
+	// 使用call改变函数的this指向
+	// fun.call(document, 1, 2, 3);
+
+	// 使用apply改变函数中this指向
+	fun.apply(document.body, [1, 2, 3]);
+	</script>
+</body>
+</html>

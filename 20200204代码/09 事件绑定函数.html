@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+
+	// 定义一个函数，通过该函数可以实现多个浏览器事件绑定
+	
+	/*
+	 * bindEvent 实现多浏览器事件绑定
+	 * @dom 要绑定事件的元素
+	 * @type 事件类型
+	 * @fn 执行的函数
+	 */
+	
+	function bindEvent(dom, type, fn) {
+		// 使用能力检测， 检测浏览器支持哪种能力
+		// 能力检测就是利用: 当一个元素读取一个属性的时候，如果能读取到那么就输出，如果属性不存在就会输出undefined ，而不是报错的这个特点。
+		if (dom.addEventListener) {
+			// 说明是高级浏览器
+			dom.addEventListener(type, fn, false);
+		} else if (dom.attachEvent) {
+			// 说明是IE中的高版本
+			dom.attachEvent("on" + type, fn);
+		} else {
+			// 说明是IE中的低版本或者一些不知名的浏览器
+			dom["on" + type] = fn; 
+		}
+	}
+
+	// 调用
+	bindEvent(box, "click", function() {
+		console.log("事件执行了");
+	});
+	</script>
+</body>
+</html>

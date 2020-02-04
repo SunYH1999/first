@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 500px;
+			height: 500px;
+			margin: 0 auto;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+	</div>
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+
+
+	// 绑定attachEvent
+	// box.attachEvent("onclick", function() {
+	// 	console.log("attachEvent1")
+	// })
+
+	// 绑定dom0级事件
+	box.onclick = function() {
+		// console.log(1);
+		console.log(this);
+	}
+	box.attachEvent("onclick", function() {
+		// console.log("attachEvent2");
+		console.log(this);
+	})
+
+	// box.attachEvent("onclick", function() {
+	// 	console.log("attachEvent3")
+	// })
+
+
+	// 执行事件的顺序: IE的attachEvent事件，是先绑定的后执行，后绑定的先执行。
+	// dom0级优先执行，然后再逆序执行attachEvent事件
+	</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 400px;
+			height: 400px;
+			margin: 0 auto;
+			overflow: hidden;
+			background-color: red;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="box">
+	</div>
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+
+	// 添加点击事件
+	box.onclick = function(e) {
+		// 输出事件对象
+		// console.log(e);
+
+		// IE中没有将事件对象传递 而是在window.event身上
+		// for (var i in window.event) {
+		// 	console.log(i);
+		// }
+
+
+		// 兼容方式
+		var e = e || window.event;
+		console.log(e)
+	}
+
+	// 经过测试，dom0级事件
+	//  在高级浏览器中 事件对象可以被传递进来
+	//  在IE中没有被传递进来， 而是在window.envent身上
+
+	</script>
+</body>
+</html>
