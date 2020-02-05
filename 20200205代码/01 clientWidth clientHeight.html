@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			float: left;
+			padding: 10px;
+			background-color: red;
+			border: 10px solid blue;
+		}
+		img {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<img src="images/0.jpg" alt="">
+	</div>
+	<script type="text/javascript">
+	// 平时我们在书写代码的时候， 应该是要获取元素的宽和高， 而不是直接使用
+	// 现在，box的宽高是由图片给撑起来的
+	// 我们可以通过getComoutedStyle来获取box的宽高， 但是比较麻烦， 因为宽度和高度都是我们常用的值
+	// 所有在dom中 提供了相应方法 来快速获取元素的相关值
+
+	// 获取元素
+	var box = document.getElementById("box");
+
+	console.log(box.clientWidth);
+
+	window.onload = function() {
+		console.log("clientWidth的值是:" + box.clientWidth);
+		console.log("clientHeight的值是:" + box.clientHeight);
+	}
+	</script>
+</body>
+</html>

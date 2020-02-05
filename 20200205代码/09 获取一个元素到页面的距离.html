@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			height: 123px;
+			margin-bottom: 100px;
+		}
+		#box1 {
+			position: relative;
+			border-top: 10px solid blue;
+		}
+		#box2 {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			left: 100px;
+			top: 100px;
+			background-color: red;
+			border-top: 10px solid orange;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<div id="box1">
+		<div id="box2"></div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+	// 定义一个函数，传入一个元素，返回一个对象，对象中要包含该元素的定位值（left, top）
+
+	function offset(dom) {
+		/*
+			思路:
+				获取元素的定位父元素，再获取距离
+				再获取元素的定位父元素的定位父元素， 再获取距离
+				再获取元素的定位父元素的定位父元素的定位父元素， 直到终点 => body元素 距离相累加
+		 */
+		// for (, dom != document.body; dom = dom.offsetPatent)
+
+		// 获取浏览器的信息
+		var str = window.navigator.userAgent;
+		// 定义变量简化书写
+		var isIE8 = null;
+		// 检测浏览器信息
+		if (str.indexOf("MSIE 8.0") === -1) {
+			// console.log("不是IE8");
+			isIE8 = false;
+		} else {
+			// console.log("是IE8");
+			isIE8 = true;
+		}
+
+		// 定义对象
+		// 一开始不应该加上自己的边框，
+		var result = {
+			top: dom.offsetLeft,
+			left: dom.offsetTop
+		}
+
+		// 使用while循环
+		while (dom != document.body) {
+			// console.log(dom);
+			dom = dom.offsetParent;
+
+			// 判断是不是IE8
+			if (isIE8) {
+				// 说明是IE8 不需要加上父元素的边框了
+				result.left += dom.offsetLeft;
+				result.top += dom.offsetTop;
+			} else {
+				// 说明不是IE8 需要额外加上复元素的边框
+				result.left += dom.offsetLeft + dom.clientLeft;
+				result.top += dom.offsetTop + dom.clientTop;
+			}
+
+		}
+		// 返回对象
+		return result;
+	}
+
+
+
+	// 获取元素
+	var box2 = document.getElementById("box2");
+	// 调用
+	var result = offset(box2);
+	console.log(result);
+
+	// 获取元素到页面的距离
+	console.log($("#box2").offset());
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			position: absolute;
+			width: 400px;
+			height: 400px;
+			top: 200px;
+			left: 100px;
+			border: 1px solid red;
+			background-image: url(images/small.jpg);
+			background-size: cover;
+		}
+		#glass {
+			position: absolute;
+			width: 200px;
+			height: 200px;
+			background-color: rgba(0, 0, 255, .5);
+			left: 0;
+			top: 0;
+		}
+		#box1 {
+			position: absolute;
+			width: 400px;
+			height: 400px;
+			top: 200px;
+			left: 550px;
+			background-image: url(images/big.jpg);
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="glass"></div>
+	</div>
+	<div id="box1"></div>
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+	var glass = document.getElementById("glass");
+	var box1 = document.getElementById("box1");
+
+	// 给glass添加mousedown事件
+	glass.onmousedown = function(e) {
+		// 获取鼠标位于视口中的位置
+		var x = e.clientX;
+		var y = e.clientY;
+
+		// 获取镜片的定位值
+		var left = this.offsetLeft;
+		var top = this.offsetTop;
+
+		// 给document添加mousemove事件]
+		document.onmousemove = function(e) {
+			// 获取鼠标移动后的位置
+			var m_x = e.clientX;
+			var m_y = e.clientY;
+
+			// 定义变量简化书写
+			var resultX = m_x - x + left;
+			var resultY = m_y - y + top
+
+			// 进行边界限制
+			// 左右
+			if (resultX < 0) {
+				resultX = 0;
+			} else if (resultX > box.clientWidth - glass.clientWidth) {
+				resultX = box.clientWidth - glass.clientWidth;
+			}
+
+			// 上下
+			if (resultY < 0) {
+				resultY = 0;
+			} else if (resultY > box.clientHeight - glass.clientHeight) {
+				resultY = box.clientHeight - glass.clientHeight;
+			}
+
+			// 改变镜片的定位值  用移动后的鼠标位置 - 移动之前的位置 就是镜片的left top值
+			glass.style.left = resultX + "px";
+			glass.style.top = resultY + "px";
+
+			// 改变box1的背景图片定位
+			box1.style.backgroundPosition = - 2 * resultX + "px " + - 2 * resultY + "px";
+		}
+	}
+
+	// 鼠标抬起取消移动事件
+	document.onmouseup = function() {
+		document.onmousemove = null;
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			position: relative;
+			width: 500px;
+			height: 500px;
+			margin: 0 auto;
+			background-color: red;
+		}
+		#box1 {
+			width: 250px;
+			height: 250px;
+			margin: 0 auto;
+			background-color: blue;
+		}
+		#box2 {
+			position: absolute;
+			width: 200px;
+			height: 200px;
+			left: 100px;
+			top: 100px;
+			background-color: orange;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="box1">
+			<div id="box2"></div>
+		</div>
+	</div>
+	<!-- 此时box2是相对于box进行定位，在节点关系中box2的parentNode才是box1 -->
+	<script type="text/javascript">
+	// 获取元素
+	var box = document.getElementById("box");
+	var box1 = document.getElementById("box1");
+	var box2 = document.getElementById("box2");
+
+	// 通过box2获取自身的定位父元素
+	console.log(box2.offsetParent);
+	</script>
+</body>
+</html>

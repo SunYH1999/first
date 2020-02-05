@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			float: left;
+			padding: 10px;
+			background-color: red;
+			border: 10px solid blue;
+			border-left-width: 20px;
+			margin: 20px;
+		}
+		img {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<img src="images/0.jpg" alt="">
+	</div>
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+	// 获取元素
+	var $box = $("#box");
+
+	// content
+	console.log("content宽是:" + $box.width());
+	console.log("content高是:" + $box.height());
+
+	// content + padding 
+	console.log("innerWidth:" + $box.innerWidth());
+	console.log("innerHeight:" + $box.innerHeight());
+
+	// content + padding + border
+	console.log("outerWidth:" + $box.outerWidth());
+	console.log("outerHeight:" + $box.outerHeight());
+
+
+	// content + padding + border + margin
+	console.log("outerWidth(true):" + $box.outerWidth(true));
+	console.log("outerHeight(true):" + $box.outerHeight(true));
+	</script>
+</body>
+</html>
