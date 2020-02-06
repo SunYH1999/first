@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 给document绑定鼠标滚轮事件
+	// document.onmousewheel = function(e) {
+	// 	// 兼容IE
+	// 	var e = e || window.event;
+	// 	// 查看时间对象中哪个属性指示鼠标的滚动方向
+	// 	// console.log(e);
+	// 	console.log(e.wheelDelta);
+	// }
+
+	//测试火狐
+	document.addEventListener("DOMMouseScroll", function(e) {
+		// console.log(e);
+		// 查看鼠标滚轮方向的属性 e.detail
+		console.log(e.detail);
+	})
+	</script>
+</body>
+</html>

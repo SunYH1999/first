@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 给document绑定onmousewheel事件
+	// 这种绑定方式 会将事件对象传递到函数当中
+	// document.onmousewheel = function(e) {
+	// 	// 在IE中没有将事件对象传递到函数中
+	// 	// 兼容IE
+	// 	var e = e || window.event;
+	// 	console.log(e);
+	// }
+
+	// 这种方式 会将事件对象传递到函数当中
+	document.attachEvent("onmousewheel", function(e) {
+		console.log(e);
+	})
+	</script>
+</body>
+</html>

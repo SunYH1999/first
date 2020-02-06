@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 定义一个气球类
+	function Balloon(img) {
+		// 容器属性
+		this.dom = document.createElement("div");
+		// 图片属性
+		this.img = img;
+		// 图片的宽
+		this.width = this.img.width / 4;
+		// 图片的高
+		this.height = this.img.height / 3;
+		// 图片定位X
+		this.positionX = parseInt(Math.random() * 4);
+		// 图片定位Y
+		this.positionY = parseInt(Math.random() * 3);
+		// 定义left
+		this.left = 0;
+		// 定义top
+		this.top = 0;
+		// 设置样式的方法
+		this.setStyle = function() {
+			// 设置绝对定位
+			this.dom.style.position = "absolute";
+			this.dom.style.left = this.left + "px";
+			this.dom.style.top = this.top + "px";
+			// 赋值dom的宽度和高度
+			this.dom.style.width = this.width + "px";
+			this.dom.style.height = this.height + "px";
+			// 设置元素的背景图片
+			this.dom.style.backgroundImage = "url(" + this.img.src + ")";
+			// 设置图片的背景定位
+			this.dom.style.backgroundPositionX = -this.width * this.positionX + "px";
+			this.dom.style.backgroundPositionY = -this.height * this.positionY + "px";
+		}
+		// 上树
+		this.upTree = function() {
+			document.body.appendChild(this.dom);
+		}
+
+		// 设置初始化方法
+		this.init = function() {
+			this.upTree();
+			this.setStyle();
+		}
+		// 移动方法
+		this.move = function() {
+			this.left += 10;
+			this.dom.style.left = this.left + "px";
+		}
+
+		// 执行init
+		this.init();
+	}
+
+	// 创建图片元素
+	var img = document.createElement("img");
+	// 设置路径
+	img.src = "images/balloon.jpg";
+
+	var b = null;
+	// 定义定时器
+	var timer = null;
+	// 设置load事件
+	img.onload = function() {
+		// 实例化对象
+		b = new Balloon(this);
+		// 赋值timer 
+		timer = setInterval(function() {
+			b.move();
+		}, 200)
+	}
+	</script>
+</body>
+</html>
