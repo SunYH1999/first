@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#carousel {
+			position: relative;
+			width: 560px;
+			height: 300px;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+		/*滚动轮播图的关键： unit的宽度要足够宽 所有图片并排在一起*/
+		#carousel #unit {
+			position: absolute;
+			width: 5000px;
+			height: 300px;
+			left: 0;
+			top: 0;
+		}
+		#carousel #unit li {
+			float: left;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="carousel">
+		<ul id="unit">
+			<li><img src="images/0.jpg" alt=""></li>
+			<li><img src="images/1.jpg" alt=""></li>
+			<li><img src="images/2.jpg" alt=""></li>
+			<li><img src="images/3.jpg" alt=""></li>
+			<li><img src="images/4.jpg" alt=""></li>
+			<li><img src="images/0.jpg" alt=""></li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="js/animate.js"></script>
+	<script type="text/javascript" src="js/bindEvent.js"></script>
+	<script type="text/javascript">
+	// 以下使用的是面向过程的书写方式：
+	// 获取元素
+	// var unit = document.getElementById("unit");
+	// var carousel = document.getElementById("carousel");
+	// // 定义宽度
+	// var width = carousel.clientWidth;
+	// // 定义length
+	// var length = document.getElementsByTagName("li").length - 1;
+
+	// // 定义锁
+	// var lock = true;
+	// // 定义信号量
+	// var idx = 0;
+
+	// // 绑定事件
+	// bindEvent(unit, "mousewheel", function(e) {
+	// 	// 函数节流
+	// 	if (!lock) {
+	// 		return;
+	// 	}
+	// 	// 关闭锁
+	// 	lock = false;
+	// 	// console.log(direction(e));
+	// 	// 如果返回true 相当于右按钮点击事件
+	// 	if (direction(e)) {
+	// 		// 图片应该从右边进来
+	// 		// 拉动策略： 先拉动 再瞬移
+	// 		idx++;
+	// 		// 拉动
+	// 		animate(unit, {left: - idx * width}, 1000, function() {
+	// 			// 验证信号量了
+	// 			if (idx > length - 1) {
+	// 				// idx 归0
+	// 				idx = 0;
+	// 				// 拉回原位
+	// 				unit.style.left = 0;
+	// 			}
+	// 			// 开锁
+	// 			lock = true;
+	// 		})
+	// 	} else {
+	// 		// 图片应该从左侧进入 相当于左按钮事件
+	// 		// 拉动策略： 先瞬移 再拉动
+	// 		idx--;
+	// 		// 边界判定
+	// 		if (idx < 0) {
+	// 			idx = length - 1;
+	// 			// 瞬移到猫腻图
+	// 			unit.style.left = - length * width + "px";
+	// 		}
+	// 		// 拉动
+	// 		animate(unit, {left: - idx * width}, 1000, function() {
+	// 			// 开锁
+	// 			lock = true;
+	// 		})
+	// 	}
+	// })	
+
+	// // 定义一个函数， 接受一个事件对象，返回滚轮滚动的方向
+	function direction(e) {
+		// 使用e.wheelDelta 来判断是否是undefined 从而判断是哪个浏览器
+		// console.log(e.wheelDelta);
+		if (typeof e.wheelDelta === "undefined") {
+			// console.log("是火狐");
+			// 判断滚轮方向
+			if (e.detail > 0) {
+				// console.log("向下滚动");
+				return true;
+			} else {
+				// console.log("向上滚动");
+				return false;
+			}
+		} else {
+			// console.log("不是火狐");
+			if (e.wheelDelta > 0) {
+				// console.log("向上滚动");
+				return false;
+			} else {
+				// console.log("向下滚动");
+				return true;
+			}
+		}
+	}
+
+	// 以下使用的是面向对象的书写方式：
+	// 我们要把carousel看成一个对象
+	// 既然carousel是一个对象了，就可以拥有一些属性或者方法
+
+	// 定义carousel对象
+	var carousel = {
+		// 容器属性
+		dom: document.getElementById("carousel"),
+		// 图片列表属性
+		unit: document.getElementById("unit"),
+		// 定义length属性
+		length: document.getElementsByTagName("li").length - 1,
+		// 定义锁
+		lock: true,
+		// 定义信号量
+		idx: 0,
+		
+		// 图片向左的方法 相当于右按钮点击事件
+		left: function() {
+			// 函数节流
+			if (!this.lock) {
+				return;
+			}
+			// 关闭锁
+			this.lock = false;
+			// 备份this
+			var me = this;
+			// 信号量改变
+			this.idx++;
+			// 拉动
+			animate(this.unit, {"left": -this.idx * this.dom.clientWidth}, 1000, function() {
+				// 验证信号量
+				if (me.idx > me.length - 1) {
+					// 让idx 归0
+					me.idx = 0;
+					// 拉回原位
+					me.unit.style.left = 0;
+				}
+				// 开锁
+				me.lock = true;
+			})
+		},
+		// 图片往右方法
+		right:function(){
+			if (!this.lock) {
+				return;
+			}
+			// 关闭锁
+			this.lock = false;
+			this.idx--;
+			var me=this;
+			if (this.idx < 0) {
+	 			me.idx = me.length - 1;
+	 			// 瞬移到猫腻图
+	 			//注意：改了好久哈哈哈哈哈哈哈哈哈哈哈哈哈   👇👇
+	 			me.unit.style.left = -me.length * me.dom.clientWidth + "px";
+	 		}
+			animate(this.unit, {left: - this.idx *this.dom.clientWidth}, 1000, function() {
+	 			// 开锁
+	 			me.lock = true;
+	 		})
+		}
+		
+	}
+
+	// 给document添加鼠标滚轮事件
+	document.onmousewheel = function(e) {
+		if (direction(e)) {
+			// 说明是往下滚动 调用carousel的left方法
+			carousel.left();
+		}else{
+			carousel.right();
+		}
+	}
+
+	</script>
+</body>
+</html>
