@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div>1</div>
+	<div>2</div>
+	<div>3</div>
+	<script type="text/javascript">
+	// 获取类数组对象
+	var obj = document.getElementsByTagName("div");
+
+	// 定义数组
+	var arr = [];
+
+	// 请问有几种方式能确定arr是一个数组？
+	
+
+	// 第一种  instanceof
+	console.log(arr instanceof Array);
+	// 判断数组是准确的， 但是构造函数是Object也是true
+	console.log(arr instanceof Object);
+	console.log(obj instanceof Array);
+
+	// 第二种 constructor
+	console.log(arr.constructor === Array);
+	console.log(arr.constructor === Object); // false
+	console.log(obj.constructor === Array);
+
+	// 第三种 toString
+	console.log(Object.prototype.toString.call(arr) === "[object Array]");
+	console.log(Object.prototype.toString.call(obj) === "[object Array]");
+
+	// 第四种 数组的静态方法
+	console.log(Array.isArray(arr));
+	console.log(Array.isArray(obj));
+	</script>
+</body>
+</html>

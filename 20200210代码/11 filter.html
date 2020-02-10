@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+	/// 定义一个数组
+	var arr = ["周浩浩", "江峰", "江新", "赵静静"];
+
+	// 寻找第二个字符和第三个字符相等的成员
+	// var result = arr.filter(function(value, index, arr) {
+	// 	console.log(this, arguments);
+	// 	return value[1] == value[2];
+	// })
+	// console.log(result);
+
+
+	/**
+	 * 实现filter方法
+	 * @arr 要过滤的数组
+	 * @fn  执行的函数
+	 * return []  满足过滤条件的成员组成的新数组
+	 **/
+	 function filter(arr, fn) {
+	 	// 创建一个新的空数组
+	 	var result = [];
+	 	// 遍历数组
+	 	for (var i = 0; i < arr.length; i++) {
+	 		// 执行函数并判断结果
+	 		// 参数有三个: 成员值 arr[i], 索引值 i, 原数组 arr
+	 		if (fn(arr[i], i, arr)) {
+	 			// 将满足条件的成员存储
+	 			result.push(arr[i]);
+	 		}
+	 	}
+	 	// 返回新数组
+	 	return result;
+	 }
+
+
+	var result = filter(arr, function(value, index, arr) {
+		console.log(this, arguments);
+		return value[1] != value[2];
+	})
+	console.log(result);
+
+
+	// 兼容IE8
+	</script> 
+</body>
+</html>

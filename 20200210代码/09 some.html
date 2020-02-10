@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+	/// 定义一个数组
+	var arr = ["周浩", "江峰", "江新", "赵静"];
+
+	// 是否有姓赵的同学
+	// var result = arr.some(function(value, index, arr) {
+	// 	console.log(this, arguments);
+	// 	return value[0] == "江";
+	// })
+	// console.log(result);
+
+	/**
+	 * 实现some方法
+	 * @arr 要判断的数组
+	 * @fn 执行的函数
+	 * return bool 是否有成员满足条件
+	 **/
+	function some(arr, fn) {
+		// 遍历数组
+		for (var i = 0; i < arr.length; i++) {
+			// 执行函数并判断结果
+			// 传递三个参数: 成员值 arr[i]， 索引值 i, 原数组 arr
+			if (fn(arr[i], i, arr)) {
+				// 如果有成员满足条件 返回true
+				return true;
+			}
+		}
+		// 遍历完成，没有成员满足 返回false
+		return false;
+	}
+
+	// var result = some(arr, function(value, index, arr) {
+	// 	console.log(this, arguments);
+	// 	return value[0] == "王";
+	// })
+	// console.log(result);
+
+
+
+	// 兼容IE8
+	if (!Array.prototype.some) {
+		// 拓展方法
+		Array.prototype.some = function(fn) {
+			// 遍历数组 也就是遍历this
+			for (var i = 0; i < this.length; i++) {
+				// 执行函数 并判断结果
+				// 传递三个参数: 成员值 this[i]， 索引值 i, 原数组 this
+				if (fn(this[i], i, this)) {
+					// 如果有满足条件的
+					return true;
+				}
+			}
+			// 遍历完毕， 没有成员满足条件， 返回false
+			return false;
+		}
+	}
+
+
+	var result = arr.some(function(value, index, arr) {
+		console.log(this, arguments);
+		return value[0] == "李";
+	})
+	alert(result);
+	</script> 
+</body>
+</html>

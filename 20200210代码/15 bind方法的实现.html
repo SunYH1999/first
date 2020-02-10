@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 定义函数
+	function fun() {
+		console.log(this, arguments);
+	}
+
+	// 取消bind方法
+	Function.prototype.bind = null;
+	// 实现bind方法
+	Function.prototype.bind = function(target) {
+		// 获取剩余的参数
+		var arg = [].slice.call(arguments, 1);
+		// 缓存this
+		var me = this;
+		// 返回新的方法
+		return function() {
+			// 获取剩余参数
+			var addArg = [].slice.call(arguments);
+			// 调用数组合并方法
+			var result = arg.concat(addArg);
+			me.apply(target, result);
+		}
+	}
+
+
+	var result = fun.bind(document, 6, 7, 8, 9);
+	result(1, 2, 3, 4, 5);
+	</script>
+</body>
+</html>
