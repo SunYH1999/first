@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// ES5 
+	var obj = {
+		color: "red",
+		width: 200
+	}
+
+	// 默认情况下可以被枚举的
+	// for (var i in obj) {
+	// 	console.log(i, obj[i]);
+	// }
+
+	// 定义特性
+	Object.defineProperty(obj, "color", {
+		// 修改可枚举性
+		enumerable: false
+		// enumerable: true
+	})
+
+
+	// 再次使用for循环
+	for (var i in obj) {
+		console.log(i, obj[i]);
+	}
+
+	
+
+	</script>
+</body>
+</html>

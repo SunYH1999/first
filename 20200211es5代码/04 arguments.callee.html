@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 开启严格模式
+	"use strict"
+	// 安全类
+	function People(name, age, sex) {
+		// 判断this指向
+		if (this instanceof arguments.callee) {
+			this.name = name;
+			this.age = age;
+			this.sex = sex;
+		} else {
+			// 没有使用new 调用
+			return new arguments.callee(name, age, sex);
+		}
+	}
+
+	// 实例化对象
+	var p = new People("小明", 12, "男");
+	var p1 = People("小龙", 12, "男");
+	</script>
+</body>
+</html>

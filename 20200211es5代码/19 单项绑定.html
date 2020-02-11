@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		
+	</div>
+	<script type="text/javascript">
+	// 定义对象
+	var obj = {
+		color: "red"
+	}
+
+	// 获取元素
+	var box = document.getElementById("box");
+	// 设置内部文本
+	box.innerHTML = obj.color;
+
+
+	// 定义特性
+	Object.defineProperty(obj, "color", {
+		set: function(value) {
+			box.innerHTML = value;
+		}
+	})
+	</script>
+</body>
+</html>

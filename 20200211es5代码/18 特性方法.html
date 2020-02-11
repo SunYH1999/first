@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 定义对象
+	var obj = {
+		color: "red"
+	}
+
+	// 设置特性
+	// 一旦设置了特性方法（set, get），当obj.color; 就会触发get函数， 当obj.color = xx; 就会触发set函数
+	Object.defineProperty(obj, "color", {
+		// 取值器
+		get: function() {
+			console.log(111, this, arguments);
+			// 千万不要在方法中获取该属性
+			// return this.color;
+			// 获取该属性的备用值
+			return this._color;
+		},
+		// 赋值器
+		set: function(value) {
+			console.log(222, this, arguments);
+			// 千万不要设置该属性值
+			// this.color = value;
+			// 设置该属性的备用值
+			this._color = value;
+		}
+	})
+
+	obj.color = "blue";
+	console.log(obj.color);
+	</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// Es3.1
+	// var obj = {
+	// 	a: 1,
+	// 	b: 2
+	// }
+	// 可以访问obj
+	// console.log(obj);
+	// 添加属性
+	// obj.c = 3;
+	// 修改属性值
+	// obj.a = 111;
+
+	// ES5 
+	var obj = {
+		color: "red"
+	}
+
+	// 定义特性
+	Object.defineProperty(obj, "color", {
+		// 配置值
+		value: "green"
+	})
+
+	console.log(obj);
+
+	// 如果一个对象中，存在该属性，此时描述特性对象中的其他属性默认都是true
+	// 如果一个对象中，没有属性而是通过定义特性的方式添加的属性，那么描述特性对象中的其他属性默认全部是false
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 对象{}， 对象中的属性 k,v对
+	// 在Es3.1中，只要对象能够被访问，就可以任意操作该对象 ，比如: 添加属性，删除属性，修改属性值
+	// 在Es5中， 为对象拓展了一个叫做“特性”的东西，用来控制对象中属性的可访问性
+
+	// Es3.1 
+	// var obj = {
+	// 	color: "red",
+	// 	width: 100
+	// }
+	// // console.log(obj);
+	// // 添加属性
+	// obj.title = "nihao";
+	// // 删除属性
+	// delete obj.color;
+	// // 修改属性值
+	// obj.width = 200;
+
+	// console.log(obj);
+
+
+	// Es5
+	var obj = {
+		color: "red",
+		width: 100
+	}
+
+	//使用for循环
+	// for (var i in obj) {
+	// 	console.log(i);
+	// }
+
+
+	// 定义特性
+	Object.defineProperty(obj, "color", {
+		// 修改可枚举性
+		enumerable: false
+	})
+
+
+	//使用for循环
+	for (var i in obj) {
+		console.log(i);
+	}
+
+	// 总结: 同样是for循环， 在没有设置特性之前，是可以输出对象中的每一个属性
+	// 在设置了特性之后，被设置了特性的属性，没有被输出
+
+
+	</script>
+</body>
+</html>

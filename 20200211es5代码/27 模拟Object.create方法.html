@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 取消Object.create方法
+	Object.create = null;
+	// 实现Object.create方法
+	Object.create = function(prototype) {
+		var F = function() {
+
+		}
+		F.prototype = prototype;
+		return new F();
+	}
+
+
+
+
+	// 定义父类
+	function People(name, age, sex) {
+		this.name = name;
+		this.age = age;
+		this.sex = sex;
+	}
+
+	// 方法要写在原型上
+	People.prototype.sayHello = function() {
+		console.log("大家好, 我的名字叫做" + this.name + ";我的年龄是" + this.age + ";我的性别是" + this.sex);
+	}
+
+	// 定义子类
+	function Student(name, age, sex, grade) {
+		// 构造函数式继承
+		People.apply(this, arguments);
+		this.grade = grade;
+	}
+
+	// 想要让子类继承父类， 需要使用类式继承
+
+	// Student.prototype = People.prototype;
+
+	var obj = Object.create(People.prototype);
+
+	
+	Student.prototype = obj;
+	// 实例化对象
+	var s = new Student("小明", 12, "男", 6);
+	s.sayHello();
+
+
+	</script>
+</body>
+</html>

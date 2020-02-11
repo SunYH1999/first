@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// 定义对象
+	var obj = {
+		color: "red",
+		num: 100
+	}
+
+	// 定义color和num的特性
+	Object.defineProperties(obj, {
+		color: {
+			// 值
+			value: "blue",
+			// 不可写入
+			writable: false,
+			// 不可枚举
+			enumerable: false
+		},
+		num: {
+			// 取值器
+			get: function() {
+				return this._num;
+			},
+			set: function(value) {
+				this._num = value;
+			},
+			// 不可枚举
+			enumerable: false,
+			// 一旦设置了特性方法（set, get）， 将无法再次配置writable, value
+			// 不可写入
+			// writable: false,
+			// 配置值
+			// value: 300
+		}
+	})
+
+	// 修改Obj中的属性值
+	obj.color = "green";
+	obj.num = 500;
+
+	// 枚举
+	for (var i in obj) {
+		console.log(i, obj[i]);
+	}
+	</script>
+</body>
+</html>
