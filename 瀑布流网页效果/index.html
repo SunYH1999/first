@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+			width: 1244px;
+			margin: 0 auto;
+			display: flex;
+			justify-content: space-between;
+		}
+		li {
+			width: 236px;
+		}
+		.item {
+			border: 1px solid blue;
+		}
+		.item .img img {
+			width: 100%;
+		}
+		.title, .info, .user {
+			padding: 0 15px;
+			font-size: 12px;
+			line-height: 2;
+		}
+		.info {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			line-height: 1;
+			padding: 6px 15px;
+		}
+		.info span {
+			width: 12px;
+			height: 12px;
+			margin-right: 3px;
+		}
+		.repin {
+			background: url("imgs/svg.svg") no-repeat -31px 0;
+		}
+		
+		.like {
+			background: url("imgs/svg.svg") no-repeat 0 0 ;
+		}
+		.user {
+			display: flex;
+			height: 67px;
+			border-top: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		.left_img {
+			flex: 1;
+			text-align: center;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.left_img img {
+			width: 50%;
+			border-radius: 50%;
+			vertical-align: middle;
+		}
+		.right_area {
+			flex: 2;
+		}
+		.item:hover{
+			box-shadow: 10px 10px 5px #888888;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li> 	
+			
+		</li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<script type="text/template" id="tpl">
+		<div class="item">
+			<div class="img">
+				<img src="//img.hb.aicdn.com/<%file.key%>" alt="">
+			</div>
+			<div class="title">
+				<span><%raw_text%></span>
+			</div>
+			<div class="info">
+				<span class="repin"></span><span><%repin_count%></span><span class="like"></span><span><%like_count%></span>
+			</div>
+			<div class="user">
+				<div class="left_img">
+					<img src="//img.hb.aicdn.com/<%user.avatar.key%>" alt="">
+				</div>
+				<div class="right_area">
+					<div class="top_text">
+						<span><%user.username%></span><span>采集到</span>
+					</div>
+					<div class="category">
+						<span><a href="//huaban.com/boards/<%board.board_id%>/">Fruits-水果</a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript" src="jquery-1.7.2.js"></script>
+	<script type="text/javascript" >
+			// 获取模板
+			var tpl = $("#tpl");
+			var tpl_str = tpl.html();
+			// 获取lis
+			var lis = $("li");
+			// 定义一个数组 用于映射高度
+			var height_arr = new Array(lis.length).fill(0);
+		  // 发送请求 获取数据
+			function sendAJAX(idx) {
+					$.ajax({
+					 	url: "/data/" + idx + ".json",
+					 	type: "get",
+					 	dataType: "json",
+					 	success: function(data) {
+					 		// 获取数据中的数组
+					 		var arr = data.pins;
+					 		console.log(arr);
+					 		for(var i = 0; i < arr.length; i++) {
+					 			(function(i) {
+					 				setTimeout(function() {
+					 					var str = format(tpl_str, arr[i]);
+							 			// 获取当前的图片高度
+							 			var img_height = arr[i].file.height;
+							 			var height = 236 / arr[i].file.width * img_height;
+							 			// 获取最小的下标
+							 			var idx = getMinIdx(height_arr);
+							 			// 让对应的li加新的子元素
+							 			lis.eq(idx).append(str);
+							 			// li已经变高了 高度数组也要对应变化
+							 			height_arr[idx] += (height + 115);
+					 				}, i * 200)
+					 			})(i)
+					 		}
+					 	}
+					})
+			}
+			// 定义信号量 
+			var idx = 1;
+			sendAJAX(idx);
+
+			var timer = null;
+			// 绑定scroll事件 当页面快要到底时 应该发送新的ajax 渲染新的数据
+			document.body.onscroll = function() {
+				// 获取页面高度 
+				var document_height = document.body.clientHeight;
+				// 获取页面顶部被卷动的值 
+				var scrollTop = document.documentElement.scrollTop;
+				// 获取视口高度
+				var clientHeight = document.documentElement.clientHeight;
+				// 判定 如果快要到底 我们可以将该值控制在一定的范围内
+
+				if (document_height - scrollTop - clientHeight < 200) {
+					// 先清除
+					clearTimeout(timer);
+					// 再设置
+					timer = setTimeout(function() {
+						idx++;
+						sendAJAX(idx);
+					}, 400)
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		  // 定义一个函数 该函数接收两个参数 第一个是模板字符串 第二个是对象
+			function format(tplStr, dictionary) {
+				// 替换方法 将字符串中某些内容替换掉 
+				return tplStr.replace(/<%((\w+)(\.\w+)*)%>/g, function(match, $1) {
+					// 将$1以.分割成数组
+					var arr = $1.split(".");
+					var result = dictionary;
+					// 循环arr 从dictionary中获取数据
+					for(var i = 0; i < arr.length - 1; i++) {
+						result = result[arr[i]];
+
+					}
+					return result[arr[i]];
+				})
+			}
+
+			// 定义函数 获取数组中最小的值的下标
+			function getMinIdx(arr) {
+				var idx = 0;
+				var min = arr[idx];
+				for(var i = 1; i < arr.length; i++) {
+					if (min > arr[i]) { // 如果最小值比下一个数值还要大 那么应该更换最小值 并 更换下标值
+						min = arr[i];
+						idx = i;
+					}
+				}
+				return idx;
+			}
+	</script>
+</body>
+</html>
